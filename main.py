@@ -1,22 +1,22 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import List
+
+class Product(BaseModel):
+    id: int
+    name: str
+    price: float
 
 app = FastAPI()
 
-class Customer(BaseModel):
-    id: int
-    name: str
-    email: str
-
-# Dummy data for customers
-dummy_customers = [
-    {"id": 1, "name": "Alice Smith", "email": "alice.smith@example.com"},
-    {"id": 2, "name": "Bob Johnson", "email": "bob.johnson@example.com"},
-    {"id": 3, "name": "Charlie Brown", "email": "charlie.brown@example.com"}
+# In a real application, this would come from a database
+dummy_products = [
+    {"id": 1, "name": "Laptop", "price": 1200.00},
+    {"id": 2, "name": "Mouse", "price": 25.50},
+    {"id": 3, "name": "Keyboard", "price": 75.00},
+    {"id": 4, "name": "Monitor", "price": 300.00}
 ]
 
-@app.get("/customers", response_model=List[Customer])
-async def get_customers():
-    """Returns a list of all customers."""
-    return dummy_customers
+@app.get("/products", response_model=list[Product])
+async def get_products():
+    """Return a list of all products."""
+    return dummy_products
